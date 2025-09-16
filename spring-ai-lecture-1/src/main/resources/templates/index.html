@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring AI Fundamentals</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 40px auto;
+          padding-left: 20px;
+          padding-right: 20px;
+          width:95%;
+        }
+        h1 {
+          text-align: center;
+        }
+        #chat-box {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 10px;
+          height: 600px;
+          overflow-y: auto;
+          margin-bottom: 15px;
+          background: #f9f9f9;
+        }
+        .question {
+          margin: 8px 0;
+        }
+        .user {
+          font-weight: bold;
+          color: #2c5282;
+        }
+        .ai {
+          font-weight: bold;
+          color: #2f855a;
+        }
+        textarea {
+          width: 99%;
+          padding: 10px;
+          margin-bottom: 10px;
+        }
+        button {
+          padding: 10px 20px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          cursor: pointer;
+          border-radius: 4px;
+        }
+        button:hover {
+          background-color: #45a049;
+        }
+        .ai-response {
+           white-space: pre-wrap;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<h1>Spring AI</h1>
+<div id="chat-box"></div>
+<textarea id="user-input" placeholder="Ask..."></textarea>
+<button onclick="sendQuestion()">Send</button>
+
+<script>
+    async function sendQuestion() {
+      const input = document.getElementById('user-input');
+      const question = input.value.trim();
+      if (!question) return;
+
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML += `<div class='question'><span class='user'>You:</span> ${question}</div>`;
+
+      input.value = '';
+
+      try {
+        const response = await fetch('/travel-planning', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'question=' + encodeURIComponent(question)
+        });
+        const text = await response.text();
+
+        chatBox.innerHTML += `<div class='question'><span class='ai'>AI Response:</span> <div class='ai-response'>${text}</div></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+      } catch (error) {
+        chatBox.innerHTML += `<div class='question'><span class='ai'>Error:</span> ${error}</div>`;
+      }
+    }
+</script>
+</body>
+</html>
