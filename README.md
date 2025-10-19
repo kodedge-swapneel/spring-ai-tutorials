@@ -3,3 +3,4 @@
 ## 📚 Lectures
 1. [Spring AI Introduction](https://youtu.be/s2LKpZpHaOM)
 2. [ChatClient Basics](https://youtu.be/Ah5h60pe7MA)
+3. [Run LLM Model Locally using Ollama](https://youtu.be/DAYsO5yZ3RE?si=vnt6rImITbJGgwxj)
